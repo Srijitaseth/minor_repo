@@ -60,13 +60,14 @@ const Signup = () => {
         {/* Top right blob decoration */}
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-sheild-purple rounded-full opacity-20 blur-3xl"></div>
         
-        {/* Back button */}
+        {/* Back button - Updated to use navigate instead of Link */}
         <div className="absolute top-4 left-4 z-10">
-          <Link to="/">
-            <button className="text-white p-1 rounded-full hover:bg-white/10">
-              <ArrowLeft size={isMobile ? 18 : 20} />
-            </button>
-          </Link>
+          <button 
+            onClick={() => navigate('/')} 
+            className="text-white p-1 rounded-full hover:bg-white/10"
+          >
+            <ArrowLeft size={isMobile ? 18 : 20} />
+          </button>
         </div>
 
         <div className="relative z-10 p-5 md:p-8">
