@@ -6,6 +6,7 @@ import SheildButton from '@/components/SheildButton';
 import { ArrowLeft, Search, Shield, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { type Map } from 'mapbox-gl';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Replace with your mapbox key when using this component
 const MAPBOX_TOKEN = 'YOUR_MAPBOX_TOKEN';  // You'll need to enter your token here or use env variables
@@ -26,6 +27,7 @@ const LocateMe = () => {
   const [isLoading, setIsLoading] = useState(true);
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<Map | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (mapContainer.current) {
@@ -87,7 +89,7 @@ const LocateMe = () => {
       <div className="flex justify-between items-center p-4">
         <Link to="/">
           <button className="text-white p-2 rounded-full hover:bg-white/10">
-            <ArrowLeft size={20} />
+            <ArrowLeft size={isMobile ? 18 : 20} />
           </button>
         </Link>
         <div className="flex items-center">
@@ -98,7 +100,7 @@ const LocateMe = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col p-4">
         {/* Location Search */}
-        <form onSubmit={handleSearch} className="mb-4">
+        <form onSubmit={handleSearch} className="mb-3">
           <div className="relative">
             <input
               type="text"
@@ -112,25 +114,25 @@ const LocateMe = () => {
         </form>
         
         {/* Map */}
-        <div className="flex-1 bg-slate-700 rounded-lg overflow-hidden relative mb-4">
+        <div className="flex-1 bg-slate-700 rounded-lg overflow-hidden relative mb-3 min-h-[300px]">
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-sheild-purple"></div>
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-sheild-purple"></div>
             </div>
           ) : (
             <>
-              <div className="absolute top-2 right-2 z-10 flex space-x-2">
-                <button className="bg-white text-black text-xs px-2 py-1 rounded flex items-center">
-                  <Shield size={12} className="mr-1" /> Safe Spots
+              <div className="absolute top-2 right-2 z-10 flex space-x-1">
+                <button className="bg-white/80 backdrop-blur-sm text-black text-xs px-2 py-1 rounded flex items-center">
+                  <Shield size={12} className="mr-1" /> Safe
                 </button>
-                <button className="bg-white text-black text-xs px-2 py-1 rounded flex items-center">
-                  <AlertTriangle size={12} className="mr-1" /> Risk Analyzer
+                <button className="bg-white/80 backdrop-blur-sm text-black text-xs px-2 py-1 rounded flex items-center">
+                  <AlertTriangle size={12} className="mr-1" /> Risk
                 </button>
               </div>
               <div ref={mapContainer} className="w-full h-full">
                 {/* This would be filled with the actual map */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-white bg-black bg-opacity-50 p-4 rounded-lg">
+                  <p className="text-white bg-black bg-opacity-50 p-3 rounded-lg text-sm text-center">
                     Map would display here with Mapbox integration.<br />
                     Current location: {currentLocation ? `${currentLocation.lat.toFixed(4)}, ${currentLocation.lng.toFixed(4)}` : 'Loading...'}
                   </p>
@@ -142,28 +144,28 @@ const LocateMe = () => {
         
         {/* Threat Information */}
         {selectedThreat && (
-          <div className="bg-red-500/20 border border-red-500 rounded-lg p-4 mb-4">
+          <div className="bg-red-500/20 border border-red-500 rounded-lg p-3 mb-3 text-sm">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-xl font-bold text-white">{selectedThreat.location}</h2>
+                <h2 className="text-lg font-bold text-white">{selectedThreat.location}</h2>
                 <div className="flex items-center mt-1">
-                  <span className="text-red-400 mr-2">Risk Level: {selectedThreat.riskLevel}</span>
-                  <span className="text-gray-300 text-sm">{selectedThreat.timestamp}</span>
+                  <span className="text-red-400 mr-2 text-sm">Risk Level: {selectedThreat.riskLevel}</span>
+                  <span className="text-gray-300 text-xs">{selectedThreat.timestamp}</span>
                 </div>
-                <p className="text-gray-300 mt-2">{selectedThreat.details}</p>
-                <p className="text-red-300 mt-1">Reported incidents: {selectedThreat.incidents}</p>
+                <p className="text-gray-300 mt-2 text-sm">{selectedThreat.details}</p>
+                <p className="text-red-300 mt-1 text-sm">Reported incidents: {selectedThreat.incidents}</p>
               </div>
             </div>
           </div>
         )}
         
         {/* Buttons */}
-        <div className="flex space-x-3">
-          <SheildButton onClick={handleAnalyzeSafety} fullWidth>
+        <div className="flex space-x-2">
+          <SheildButton onClick={handleAnalyzeSafety} fullWidth size={isMobile ? "sm" : "md"}>
             Analyze Safety
           </SheildButton>
           <Link to="/safe-places" className="flex-1">
-            <SheildButton variant="secondary" fullWidth>
+            <SheildButton variant="secondary" fullWidth size={isMobile ? "sm" : "md"}>
               Find Safe Places
             </SheildButton>
           </Link>

@@ -24,15 +24,15 @@ const SheildButton: React.FC<SheildButtonProps> = ({
   };
 
   const sizeClasses = {
-    sm: 'text-sm py-1 px-3',
-    md: 'py-2 px-4',
-    lg: 'text-lg py-3 px-6',
+    sm: 'text-sm py-1.5 px-3',
+    md: 'py-2.5 px-5',
+    lg: 'text-lg py-3.5 px-7',
   };
 
   return (
     <button
       className={cn(
-        'rounded-full font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sheild-purple disabled:opacity-50',
+        'rounded-full font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sheild-purple disabled:opacity-50 active:scale-95 shadow-md',
         variantClasses[variant],
         sizeClasses[size],
         fullWidth ? 'w-full' : '',

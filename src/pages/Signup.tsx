@@ -5,6 +5,7 @@ import Logo from '@/components/Logo';
 import SheildButton from '@/components/SheildButton';
 import { toast } from 'sonner';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -13,6 +14,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,51 +64,51 @@ const Signup = () => {
         <div className="absolute top-4 left-4 z-10">
           <Link to="/">
             <button className="text-white p-1 rounded-full hover:bg-white/10">
-              <ArrowLeft size={20} />
+              <ArrowLeft size={isMobile ? 18 : 20} />
             </button>
           </Link>
         </div>
 
-        <div className="relative z-10 p-8">
+        <div className="relative z-10 p-5 md:p-8">
           {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <Logo size="lg" />
+          <div className="flex justify-center mb-6">
+            <Logo size={isMobile ? "md" : "lg"} />
           </div>
           
           {/* Form */}
-          <form onSubmit={handleSignup} className="space-y-5">
+          <form onSubmit={handleSignup} className="space-y-4">
             <div>
-              <div className="mb-2 text-gray-300 text-sm">Name</div>
+              <div className="mb-1 text-gray-300 text-sm">Name</div>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full py-3 px-4 bg-opacity-20 bg-black rounded-md text-white focus:outline-none focus:ring-2 focus:ring-sheild-purple"
+                className="w-full py-2.5 px-4 bg-opacity-20 bg-black rounded-md text-white focus:outline-none focus:ring-2 focus:ring-sheild-purple"
                 placeholder="Enter your name"
                 required
               />
             </div>
             
             <div>
-              <div className="mb-2 text-gray-300 text-sm">Email address</div>
+              <div className="mb-1 text-gray-300 text-sm">Email address</div>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full py-3 px-4 bg-opacity-20 bg-black rounded-md text-white focus:outline-none focus:ring-2 focus:ring-sheild-purple"
+                className="w-full py-2.5 px-4 bg-opacity-20 bg-black rounded-md text-white focus:outline-none focus:ring-2 focus:ring-sheild-purple"
                 placeholder="Enter your email"
                 required
               />
             </div>
             
             <div>
-              <div className="mb-2 text-gray-300 text-sm">Password</div>
+              <div className="mb-1 text-gray-300 text-sm">Password</div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full py-3 px-4 bg-opacity-20 bg-black rounded-md text-white focus:outline-none focus:ring-2 focus:ring-sheild-purple"
+                  className="w-full py-2.5 px-4 bg-opacity-20 bg-black rounded-md text-white focus:outline-none focus:ring-2 focus:ring-sheild-purple"
                   placeholder="Create a password"
                   required
                 />
@@ -129,6 +131,7 @@ const Signup = () => {
                 variant="primary" 
                 fullWidth 
                 disabled={loading}
+                size={isMobile ? "md" : "lg"}
               >
                 {loading ? 'Creating account...' : 'Sign up'}
               </SheildButton>
@@ -136,7 +139,7 @@ const Signup = () => {
           </form>
           
           {/* Login link */}
-          <div className="mt-8 text-center text-gray-300">
+          <div className="mt-6 text-center text-gray-300 text-sm">
             Have an account? {' '}
             <Link to="/login" className="text-sheild-lightpurple hover:underline">
               Log in

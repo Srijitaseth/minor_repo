@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
@@ -7,10 +8,18 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ size = 'md', showText = true }) => {
+  const isMobile = useIsMobile();
+  
   const sizeClasses = {
     sm: 'w-8 h-8',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16',
+    md: isMobile ? 'w-10 h-10' : 'w-12 h-12',
+    lg: isMobile ? 'w-14 h-14' : 'w-16 h-16',
+  };
+
+  const textSizeClasses = {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-xl',
   };
 
   return (
@@ -33,7 +42,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', showText = true }) => {
       </div>
       {showText && (
         <div className="mt-1 text-center">
-          <div className="text-white font-bold text-xl tracking-wider">SHEILD</div>
+          <div className={`text-white font-bold tracking-wider ${textSizeClasses[size]}`}>SHEILD</div>
           <div className="text-white text-xs tracking-widest">SAFETY APP</div>
         </div>
       )}

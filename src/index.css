@@ -75,6 +75,8 @@
   body {
     @apply bg-sheild-darkblue text-foreground;
     font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
   }
 }
 
@@ -89,7 +91,7 @@
     box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 30px rgba(255, 69, 0, 0);
+    box-shadow: 0 0 0 20px rgba(255, 69, 0, 0);
   }
   100% {
     box-shadow: 0 0 0 0 rgba(255, 69, 0, 0);
@@ -105,7 +107,7 @@
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -119,4 +121,47 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #6A32E1;
+}
+
+/* Mobile-specific animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out forwards;
+}
+
+/* Improve tap targets for mobile */
+button, a, input, select, textarea {
+  @apply focus:outline-none;
+}
+
+/* Make inputs mobile-friendly */
+input, select, textarea {
+  font-size: 16px; /* Prevents iOS zoom on focus */
+}
+
+/* Bottom navigation for mobile */
+.mobile-nav-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  background-color: rgba(19, 24, 83, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 50;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Safe touch areas for mobile */
+.mobile-touch-target {
+  min-height: 44px;
+  min-width: 44px;
 }
